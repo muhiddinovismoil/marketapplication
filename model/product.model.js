@@ -1,9 +1,9 @@
 import { pool } from "../databases/index.js";
 
 export const createProductModel = async (product) => {
-  try {
-    const result = await pool.query(
-      `
+    try {
+        const result = await pool.query(
+            `
     INSERT INTO product (
       name,
       quantity,
@@ -18,41 +18,48 @@ export const createProductModel = async (product) => {
       $5
     ) RETURNING *
 `,
-      [
-        product.name,
-        product.quantity,
-        product.price,
-        product.market_id,
-        product.category_id,
-      ]
-    );
+            [
+                product.name,
+                product.quantity,
+                product.price,
+                product.market_id,
+                product.category_id,
+            ]
+        );
 
-    return result.rows;
-  } catch (error) {
-    throw new Error(error);
-  }
+        return result.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };
-
+export const searchProductModel = async () => {
+    try {
+        const result = await pool.query(`SELECT * FROM category`);
+        return result.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
 export const findProductById = async (id) => {
-  try {
-    const result = await pool.query(
-      `
+    try {
+        const result = await pool.query(
+            `
    SELECT * FROM product 
       WHERE id = $1;
 `,
-      [id]
-    );
+            [id]
+        );
 
-    return result.rows;
-  } catch (error) {
-    throw new Error(error);
-  }
+        return result.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
 export const updateProductById = async (product, id) => {
-  try {
-    const result = await pool.query(
-      `
+    try {
+        const result = await pool.query(
+            `
       UPDATE product
         SET 
         name = $1,
@@ -62,33 +69,33 @@ export const updateProductById = async (product, id) => {
         category_id = $5
       WHERE id = $6
         `,
-      [
-        product.name,
-        product.quantity,
-        product.price,
-        product.market_id,
-        product.category_id,
-        id,
-      ]
-    );
+            [
+                product.name,
+                product.quantity,
+                product.price,
+                product.market_id,
+                product.category_id,
+                id,
+            ]
+        );
 
-    return result.rows;
-  } catch (error) {
-    throw new Error(error);
-  }
+        return result.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
 export const deleteProductById = async (id) => {
-  try {
-    const result = await pool.query(
-      `
+    try {
+        const result = await pool.query(
+            `
           DELETE FROM product  WHERE id = $1
         `,
-      [id]
-    );
+            [id]
+        );
 
-    return result.rows;
-  } catch (error) {
-    throw new Error(error);
-  }
+        return result.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };

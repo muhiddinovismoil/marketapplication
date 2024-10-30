@@ -3,11 +3,20 @@ import {
     deleteCategoryById,
     findCategoryById,
     updateCategoryById,
+    searchCategory,
 } from "../model/index.js";
 
 export const createCategoryService = async (market) => {
     try {
         const result = await createCategoryModel(market);
+        return result;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+export const searchCategoryService = async () => {
+    try {
+        const result = await searchCategory();
         return result;
     } catch (error) {
         throw new Error(error.message);

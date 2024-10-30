@@ -4,11 +4,20 @@ import {
     findProductById,
     updateProductById,
     deleteProductById,
+    searchProductModel,
 } from "../model/index.js";
 
 export const createProductService = async (product) => {
     try {
         const result = await createProductModel(product);
+        return result;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+export const searchProductService = async () => {
+    try {
+        const result = await searchProductModel();
         return result;
     } catch (error) {
         throw new Error(error.message);

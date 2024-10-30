@@ -3,8 +3,24 @@ import {
     findMarketService,
     updateMarketService,
     deleteMarketService,
+    searchMarketService,
 } from "../service/index.js";
 
+export const searchMarketContorller = async (req, res, next) => {
+    try {
+        let { name } = req.query;
+        const result = await searchMarketService();
+        const searchedWeather = result.filter((item) =>
+            item.name.toUpperCase().includes(name.toUpperCase())
+        );
+        if (result.error) {
+            return res.status(409).send(result.message);
+        }
+        res.send(searchedWeather);
+    } catch (error) {
+        next(error);
+    }
+};
 export const createMarketController = async (req, res, next) => {
     try {
         const result = await createMarketService(req.body);
